@@ -5,12 +5,14 @@ import com.anthill.OFStatisticsAPI.controllers.AbstractController;
 import com.anthill.OFStatisticsAPI.exceptions.IncorrectPasswordException;
 import com.anthill.OFStatisticsAPI.exceptions.UserNotFoundedException;
 import com.anthill.OFStatisticsAPI.repos.UserRepos;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import security.MD5;
 
+@Tag(name = "User")
 @RequestMapping("/user")
 @RestController
 public class UserController extends AbstractController<User, UserRepos> {
