@@ -21,8 +21,8 @@ public class OfStatisticsApiApplication {
 	public Info apiInfo() {
 		Info info = new Info();
 		info
-				.title("Live Code API")
-				.description("Live Code System Swagger Open API")
+				.title("OFStatistics REST API")
+				.description("REST API for OFStatistics bot project")
 				.version("v1.0.0");
 		return info;
 	}

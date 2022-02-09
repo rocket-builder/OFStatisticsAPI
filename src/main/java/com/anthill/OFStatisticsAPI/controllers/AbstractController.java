@@ -50,6 +50,7 @@ public abstract class AbstractController<E extends AbstractEntity, R extends Com
 
         throw new ResourceNotFoundedException();
     }
+
     @Override
     public ResponseEntity<List<E>> findAll() {
         List<E> entities = repos.findAll();
