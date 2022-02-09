@@ -1,11 +1,14 @@
 package com.anthill.OFStatisticsAPI.beans;
 
 import com.anthill.OFStatisticsAPI.enums.Schedule;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.math.BigDecimal;
@@ -18,19 +21,33 @@ import java.util.List;
 @Entity
 public class Statistic extends AbstractEntity {
 
-    @OneToMany
+    @JsonProperty("ExtraStatistics")
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<ExtraStatistic> extraStatistic;
 
-    private Period userTime, guestTime;
-    private int userTotal, guestTotal;
+    @JsonProperty("UserTime")
+    @JsonFormat(pattern="HH:mm:ss")
+    private Date userTime;
 
+    @JsonProperty("GuestTime")
+    @JsonFormat(pattern="HH:mm:ss")
+    private Date guestTime;
+
+    @JsonProperty("UserTotal")
+    private int userTotal;
+
+    @JsonProperty("GuestTotal")
+    private int guestTotal;
+
+    @JsonProperty("Earning")
     private BigDecimal earning;
 
-    @JsonProperty("countSub")
+    @JsonProperty("CountSub")
     private int subCount;
 
+    @JsonProperty("Schedule")
     private Schedule schedule;
 
-    @JsonProperty("date")
+    @JsonProperty("Date")
     private Date statisticDate;
 }
