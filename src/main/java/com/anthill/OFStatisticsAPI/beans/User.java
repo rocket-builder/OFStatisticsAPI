@@ -24,7 +24,4 @@ public class User extends AbstractEntity {
     @JsonProperty("Role")
     @Enumerated(EnumType.STRING)
     private Role role = Role.WORKER;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<OnlyFansModel> models;
 }
