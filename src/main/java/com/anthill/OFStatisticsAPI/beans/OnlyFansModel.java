@@ -6,19 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter @Setter
 @Entity
-@JsonIgnoreProperties({"user"})
+@JsonIgnoreProperties({"user", "statistics"})
 public class OnlyFansModel extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "model", cascade = CascadeType.REMOVE)
+    private List<ModelStatistic> statistics;
 
     @JsonProperty("Login")
     private String login;

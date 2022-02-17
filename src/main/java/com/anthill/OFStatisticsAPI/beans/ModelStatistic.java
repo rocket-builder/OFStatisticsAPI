@@ -14,11 +14,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class ModelStatistic extends AbstractEntity {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JsonProperty("OnlyFansModel")
     private OnlyFansModel model;
 
     @JsonProperty("Statistic")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Statistic statistic;
 }
