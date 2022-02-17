@@ -25,6 +25,6 @@ public class User extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private Role role = Role.WORKER;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<OnlyFansModel> models;
 }
