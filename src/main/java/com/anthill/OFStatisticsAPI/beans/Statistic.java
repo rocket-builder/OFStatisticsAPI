@@ -6,14 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.Period;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -27,10 +23,12 @@ public class Statistic extends AbstractEntity {
 
     @JsonProperty("UserTime")
     @JsonFormat(pattern="HH:mm:ss")
+    @Temporal(TemporalType.TIME)
     private Date userTime;
 
     @JsonProperty("GuestTime")
     @JsonFormat(pattern="HH:mm:ss")
+    @Temporal(TemporalType.TIME)
     private Date guestTime;
 
     @JsonProperty("UserTotal")

@@ -7,9 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter @Setter
@@ -25,4 +24,7 @@ public class User extends AbstractEntity {
     @JsonProperty("Role")
     @Enumerated(EnumType.STRING)
     private Role role = Role.WORKER;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<OnlyFansModel> models;
 }
