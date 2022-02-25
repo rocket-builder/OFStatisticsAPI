@@ -15,8 +15,8 @@ import java.util.List;
 @JsonIgnoreProperties({"user", "statistics"})
 public class OnlyFansModel extends AbstractEntity {
 
-    @OneToMany(mappedBy = "model", cascade = CascadeType.REMOVE)
-    private List<ModelStatistic> statistics;
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    private List<Statistic> statistics;
 
     @JsonProperty("Login")
     private String login;
