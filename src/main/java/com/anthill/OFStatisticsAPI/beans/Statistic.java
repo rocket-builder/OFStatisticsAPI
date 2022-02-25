@@ -2,6 +2,7 @@ package com.anthill.OFStatisticsAPI.beans;
 
 import com.anthill.OFStatisticsAPI.enums.Schedule;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,10 +16,15 @@ import java.util.List;
 @NoArgsConstructor
 @Getter @Setter
 @Entity
+@JsonIgnoreProperties({"model"})
 public class Statistic extends AbstractEntity {
 
+    @ManyToOne
+    @JoinColumn(name = "model_id")
+    private OnlyFansModel model;
+
     @JsonProperty("ExtraStatistics")
-    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExtraStatistic> extraStatistic;
 
     @JsonProperty("UserTime")
