@@ -24,7 +24,7 @@ public class Statistic extends AbstractEntity {
     private OnlyFansModel model;
 
     @JsonProperty("ExtraStatistics")
-    @OneToMany(mappedBy = "statistic", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExtraStatistic> extraStatistic;
 
     @JsonProperty("UserTime")

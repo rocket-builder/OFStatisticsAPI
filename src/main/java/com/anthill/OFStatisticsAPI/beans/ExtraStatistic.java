@@ -19,10 +19,6 @@ import javax.persistence.ManyToOne;
 @JsonIgnoreProperties({"statistic"})
 public class ExtraStatistic extends AbstractEntity {
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "statistic_id")
-    private Statistic statistic;
-
     @JsonProperty("Name")
     private String name = "";
 
