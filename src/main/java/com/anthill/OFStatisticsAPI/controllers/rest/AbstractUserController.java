@@ -1,6 +1,7 @@
 package com.anthill.OFStatisticsAPI.controllers.rest;
 
 import com.anthill.OFStatisticsAPI.beans.dto.SignUpDto;
+import com.anthill.OFStatisticsAPI.beans.onlyfans.OnlyFansModel;
 import com.anthill.OFStatisticsAPI.beans.user.AbstractUser;
 import com.anthill.OFStatisticsAPI.beans.user.Admin;
 import com.anthill.OFStatisticsAPI.beans.user.Manager;
@@ -8,14 +9,12 @@ import com.anthill.OFStatisticsAPI.beans.user.Worker;
 import com.anthill.OFStatisticsAPI.controllers.AbstractController;
 import com.anthill.OFStatisticsAPI.enums.Role;
 import com.anthill.OFStatisticsAPI.exceptions.*;
-import com.anthill.OFStatisticsAPI.repos.AbstractUserRepos;
-import com.anthill.OFStatisticsAPI.repos.AdminRepos;
-import com.anthill.OFStatisticsAPI.repos.ManagerRepos;
-import com.anthill.OFStatisticsAPI.repos.WorkerRepos;
+import com.anthill.OFStatisticsAPI.repos.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import security.MD5;
+
+import java.util.List;
 
 @Tag(name = "User")
 @RequestMapping("/user")
@@ -25,13 +24,15 @@ public class AbstractUserController extends AbstractController<AbstractUser, Abs
     private final AdminRepos adminRepos;
     private final WorkerRepos workerRepos;
     private final ManagerRepos managerRepos;
+    private final OnlyFansModelRepos modelRepos;
 
     protected AbstractUserController(AbstractUserRepos repos, AdminRepos adminRepos, WorkerRepos workerRepos,
-                                     ManagerRepos managerRepos) {
+                                     ManagerRepos managerRepos, OnlyFansModelRepos modelRepos) {
         super(repos);
         this.adminRepos = adminRepos;
         this.workerRepos = workerRepos;
         this.managerRepos = managerRepos;
+        this.modelRepos = modelRepos;
     }
 
     @PostMapping("/login")
@@ -90,6 +91,37 @@ public class AbstractUserController extends AbstractController<AbstractUser, Abs
                     worker.setManager(manager);
                     return workerRepos.save(worker);
                 })
+                .orElseThrow(ResourceNotFoundedException::new);
+    }
+
+    @GetMapping("/{id}/worker")
+    public List<Worker> getWorkers(@PathVariable("id") long id) throws ResourceNotFoundedException {
+        var managerOptional = managerRepos.findById(id);
+
+        return managerOptional
+                .map(Manager::getWorkers)
+                .orElseThrow(ResourceNotFoundedException::new);
+    }
+
+    @PostMapping("{id}/onlyFansModel")
+    public OnlyFansModel saveModel(@PathVariable("id") long id, @RequestBody OnlyFansModel model)
+            throws UserNotFoundedException {
+        var managerOptional = managerRepos.findById(id);
+
+        return managerOptional
+                .map(manager -> {
+                    model.setManager(manager);
+                    return modelRepos.save(model);
+                })
+                .orElseThrow(UserNotFoundedException::new);
+    }
+
+    @GetMapping("/{id}/onlyFansModel")
+    public List<OnlyFansModel> getModels(@PathVariable("id") long id) throws ResourceNotFoundedException {
+        var managerOptional = managerRepos.findById(id);
+
+        return managerOptional
+                .map(Manager::getModels)
                 .orElseThrow(ResourceNotFoundedException::new);
     }
 }

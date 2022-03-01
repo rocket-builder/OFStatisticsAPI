@@ -13,6 +13,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class ScheduleStatistic extends AbstractEntity {
     private OnlyFansAccount account;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ExtraStatistic> extraStatistic;
+    private List<ExtraStatistic> extraStatistic = new ArrayList<>();
 
     @JsonFormat(pattern="HH:mm:ss")
     @Temporal(TemporalType.TIME)
