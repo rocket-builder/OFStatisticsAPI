@@ -1,6 +1,6 @@
 package com.anthill.OFStatisticsAPI.enums;
 
-public enum Role {
+public enum AccountType {
 
-    ADMIN, WORKER, MANAGER;
+    FREE, VIP;
 }
