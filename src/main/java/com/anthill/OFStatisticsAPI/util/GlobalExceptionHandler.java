@@ -80,4 +80,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>("You entered an incorrect login or password. \n" +
                 "Please try again :(", HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(IncorrectUserException.class)
+    public ResponseEntity<String> incorrectUserException(IncorrectUserException ex){
+
+        return new ResponseEntity<>("Incorrect user :(", HttpStatus.BAD_REQUEST);
+    }
 }
