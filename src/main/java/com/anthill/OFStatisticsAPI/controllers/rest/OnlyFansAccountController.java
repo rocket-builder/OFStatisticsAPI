@@ -55,7 +55,7 @@ public class OnlyFansAccountController extends AbstractController<OnlyFansAccoun
         var accountOptional = repos.findById(id);
 
         return accountOptional
-                .map(OnlyFansAccount::getStatistics)
+                .map(account -> statisticRepos.findAllPageableByAccount(account.getId(), start, end))
                 .orElseThrow(ResourceNotFoundedException::new);
     }
 }

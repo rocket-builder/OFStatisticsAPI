@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ScheduleStatisticRepos extends CommonRepository<ScheduleStatistic> {
 
-    @Query(value = "select * from schedule_statistics s where s.account_id = ?1 offset ?2 limit ?3", nativeQuery = true)
-    List<ScheduleStatistic> findAllPageableByAccount(int accountId, int offset, int limit);
+    @Query(value = "select * from schedule_statistic s where s.account_id = ?1 limit ?3 offset ?2", nativeQuery = true)
+    List<ScheduleStatistic> findAllPageableByAccount(long accountId, int offset, int limit);
 }
