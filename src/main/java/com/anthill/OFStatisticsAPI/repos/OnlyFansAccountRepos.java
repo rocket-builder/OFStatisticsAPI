@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OnlyFansAccountRepos extends CommonRepository<OnlyFansAccount> {
+
+    boolean existsByLogin(String login);
 }

@@ -3,7 +3,6 @@ package com.anthill.OFStatisticsAPI.controllers.rest;
 import com.anthill.OFStatisticsAPI.beans.onlyfans.OnlyFansAccount;
 import com.anthill.OFStatisticsAPI.beans.onlyfans.OnlyFansModel;
 import com.anthill.OFStatisticsAPI.controllers.AbstractController;
-import com.anthill.OFStatisticsAPI.exceptions.ResourceAlreadyExists;
 import com.anthill.OFStatisticsAPI.exceptions.ResourceNotFoundedException;
 import com.anthill.OFStatisticsAPI.repos.OnlyFansAccountRepos;
 import com.anthill.OFStatisticsAPI.repos.OnlyFansModelRepos;

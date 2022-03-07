@@ -1,5 +1,6 @@
 package com.anthill.OFStatisticsAPI.controllers.rest;
 
+import com.anthill.OFStatisticsAPI.beans.ScheduleStatistic;
 import com.anthill.OFStatisticsAPI.beans.dto.SignUpDto;
 import com.anthill.OFStatisticsAPI.beans.onlyfans.OnlyFansModel;
 import com.anthill.OFStatisticsAPI.beans.user.AbstractUser;
@@ -7,13 +8,16 @@ import com.anthill.OFStatisticsAPI.beans.user.Admin;
 import com.anthill.OFStatisticsAPI.beans.user.Manager;
 import com.anthill.OFStatisticsAPI.beans.user.Worker;
 import com.anthill.OFStatisticsAPI.controllers.AbstractController;
+import com.anthill.OFStatisticsAPI.enums.AccountType;
 import com.anthill.OFStatisticsAPI.enums.Role;
 import com.anthill.OFStatisticsAPI.exceptions.*;
 import com.anthill.OFStatisticsAPI.repos.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import security.MD5;
 
+import java.util.Date;
 import java.util.List;
 
 @Tag(name = "User")
@@ -25,14 +29,17 @@ public class AbstractUserController extends AbstractController<AbstractUser, Abs
     private final WorkerRepos workerRepos;
     private final ManagerRepos managerRepos;
     private final OnlyFansModelRepos modelRepos;
+    private final ScheduleStatisticRepos statisticRepos;
 
     protected AbstractUserController(AbstractUserRepos repos, AdminRepos adminRepos, WorkerRepos workerRepos,
-                                     ManagerRepos managerRepos, OnlyFansModelRepos modelRepos) {
+                                     ManagerRepos managerRepos, OnlyFansModelRepos modelRepos,
+                                     ScheduleStatisticRepos statisticRepos) {
         super(repos);
         this.adminRepos = adminRepos;
         this.workerRepos = workerRepos;
         this.managerRepos = managerRepos;
         this.modelRepos = modelRepos;
+        this.statisticRepos = statisticRepos;
     }
 
     @PostMapping("/login")
@@ -103,7 +110,7 @@ public class AbstractUserController extends AbstractController<AbstractUser, Abs
                 .orElseThrow(ResourceNotFoundedException::new);
     }
 
-    @PostMapping("{id}/onlyFansModel")
+    @PostMapping("/{id}/onlyFansModel")
     public OnlyFansModel saveModel(@PathVariable("id") long id, @RequestBody OnlyFansModel model)
             throws UserNotFoundedException {
         var managerOptional = managerRepos.findById(id);
@@ -123,5 +130,19 @@ public class AbstractUserController extends AbstractController<AbstractUser, Abs
         return managerOptional
                 .map(Manager::getModels)
                 .orElseThrow(ResourceNotFoundedException::new);
+    }
+
+    @GetMapping("/{id}/onlyFansModel/{accountType}/schedule")
+    public List<ScheduleStatistic> getSchedule(@PathVariable("id") long id,
+                                               @PathVariable("accountType") AccountType accountType,
+                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date start,
+                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date end)
+            throws UserNotFoundedException {
+        var managerOptional = managerRepos.findById(id);
+
+        return managerOptional
+                .map(manager ->
+                        statisticRepos.findAllByManagerAndAccountTypeWithDateRange(manager, accountType, start, end))
+                .orElseThrow(UserNotFoundedException::new);
     }
 }
