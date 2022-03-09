@@ -1,6 +1,7 @@
 package com.anthill.OFStatisticsAPI.repos;
 
 import com.anthill.OFStatisticsAPI.beans.ScheduleStatistic;
+import com.anthill.OFStatisticsAPI.beans.onlyfans.OnlyFansModel;
 import com.anthill.OFStatisticsAPI.beans.user.Manager;
 import com.anthill.OFStatisticsAPI.enums.AccountType;
 import com.anthill.OFStatisticsAPI.interfaces.CommonRepository;
@@ -23,4 +24,10 @@ public interface ScheduleStatisticRepos extends CommonRepository<ScheduleStatist
     List<ScheduleStatistic> findAllByManagerAndAccountTypeWithDateRange(@Param("manager")Manager manager,
                                                                     @Param("accountType") AccountType accountType,
                                                                     @Param("start") Date start, @Param("end") Date end);
+
+    @Query(value = "select s from ScheduleStatistic s where s.account.model=:model " +
+            "and s.account.accountType=:accountType and date(s.moment)=date(:moment)")
+    List<ScheduleStatistic> findAllByModelAndAccountTypeWithDate(@Param("model")OnlyFansModel model,
+                                                                 @Param("accountType") AccountType accountType,
+                                                                 @Param("moment") Date moment);
 }
