@@ -86,4 +86,10 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>("Incorrect user :(", HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(IncorrectOffsetException.class)
+    public ResponseEntity<String> incorrectOffsetException(IncorrectOffsetException ex){
+
+        return new ResponseEntity<>("Incorrect offset be provided :(", HttpStatus.BAD_REQUEST);
+    }
 }

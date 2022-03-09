@@ -1,7 +1,9 @@
 package com.anthill.OFStatisticsAPI.services;
 
 import com.anthill.OFStatisticsAPI.beans.ScheduleStatistic;
+import com.anthill.OFStatisticsAPI.beans.dto.ManagerOnlyFansModelsStatisticDto;
 import com.anthill.OFStatisticsAPI.beans.dto.OnlyFansModelDailyStatisticDto;
+import com.anthill.OFStatisticsAPI.beans.dto.OnlyFansModelShortStatisticDto;
 import com.anthill.OFStatisticsAPI.beans.dto.TotalStatisticDto;
 import org.springframework.stereotype.Service;
 
