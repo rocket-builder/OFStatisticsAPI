@@ -1,12 +1,10 @@
 package com.anthill.OFStatisticsAPI.beans;
 
 import com.anthill.OFStatisticsAPI.beans.onlyfans.OnlyFansAccount;
-import com.anthill.OFStatisticsAPI.beans.onlyfans.OnlyFansModel;
 import com.anthill.OFStatisticsAPI.beans.user.Worker;
 import com.anthill.OFStatisticsAPI.enums.Schedule;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter @Setter
 @Entity
-@JsonIgnoreProperties({"account", "worker"})
+@JsonIgnoreProperties({"account"})
 public class ScheduleStatistic extends AbstractEntity {
 
     @ManyToOne

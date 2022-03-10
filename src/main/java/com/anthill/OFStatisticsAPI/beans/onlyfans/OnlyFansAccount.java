@@ -17,7 +17,7 @@ import java.util.List;
 @JsonIgnoreProperties({"model", "statistics"})
 public class OnlyFansAccount extends AbstractEntity {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "model_id")
     private OnlyFansModel model;
 

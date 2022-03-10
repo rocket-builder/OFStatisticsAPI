@@ -2,7 +2,6 @@ package com.anthill.OFStatisticsAPI.controllers.rest;
 
 import com.anthill.OFStatisticsAPI.beans.ScheduleStatistic;
 import com.anthill.OFStatisticsAPI.controllers.AbstractController;
-import com.anthill.OFStatisticsAPI.enums.Schedule;
 import com.anthill.OFStatisticsAPI.exceptions.ResourceNotFoundedException;
 import com.anthill.OFStatisticsAPI.repos.ScheduleStatisticRepos;
 import com.anthill.OFStatisticsAPI.repos.WorkerRepos;
@@ -21,15 +20,20 @@ public class ScheduleStatisticController extends AbstractController<ScheduleStat
         this.workerRepos = workerRepos;
     }
 
-//    @PostMapping("/{schedule}/assign")
-//    public ScheduleStatistic assignWorkerToSchedule(
-//            @PathVariable("schedule") Schedule schedule, @RequestParam long workerId, @RequestParam long accountId){
-//        var workerOptional = workerRepos.findById(workerId);
-//
-//        workerOptional
-//                .map(worker -> {
-//
-//                })
-//                .orElseThrow(ResourceNotFoundedException::new);
-//    }
+
+    @PostMapping("/{id}/assign")
+    public ScheduleStatistic assignWorkerToSchedule(
+            @PathVariable("id") long id, @RequestParam long workerId) throws ResourceNotFoundedException {
+        var scheduleOptional = repos.findById(id);
+
+        var schedule = scheduleOptional
+                .orElseThrow(ResourceNotFoundedException::new);
+
+        var worker = workerRepos.findById(workerId)
+                .orElseThrow(ResourceNotFoundedException::new);
+
+        schedule.setWorker(worker);
+
+        return repos.save(schedule);
+    }
 }
