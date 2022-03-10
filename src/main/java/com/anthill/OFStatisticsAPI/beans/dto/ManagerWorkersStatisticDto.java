@@ -7,9 +7,10 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
-public class WorkerScheduleStatisticsDto {
+@Getter
+@Setter
+public class ManagerWorkersStatisticDto {
 
     private TotalStatisticDto total;
-    private List<ScheduleStatisticWithModelsDto> schedules;
+    private List<WorkerShortStatisticDto> workers;
 }

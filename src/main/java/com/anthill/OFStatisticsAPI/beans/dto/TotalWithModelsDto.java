@@ -1,6 +1,5 @@
 package com.anthill.OFStatisticsAPI.beans.dto;
 
-import com.anthill.OFStatisticsAPI.beans.ScheduleStatistic;
 import com.anthill.OFStatisticsAPI.beans.onlyfans.OnlyFansModel;
 import lombok.*;
 
@@ -10,8 +9,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class OnlyFansModelDailyStatisticDto {
+public class TotalWithModelsDto {
 
     private TotalStatisticDto total;
-    private List<ScheduleStatistic> statistics;
+    private List<OnlyFansModel> models;
 }

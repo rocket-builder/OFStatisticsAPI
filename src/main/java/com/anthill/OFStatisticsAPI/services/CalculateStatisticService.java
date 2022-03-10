@@ -1,9 +1,7 @@
 package com.anthill.OFStatisticsAPI.services;
 
 import com.anthill.OFStatisticsAPI.beans.ScheduleStatistic;
-import com.anthill.OFStatisticsAPI.beans.dto.ManagerOnlyFansModelsStatisticDto;
-import com.anthill.OFStatisticsAPI.beans.dto.OnlyFansModelDailyStatisticDto;
-import com.anthill.OFStatisticsAPI.beans.dto.OnlyFansModelShortStatisticDto;
+import com.anthill.OFStatisticsAPI.beans.dto.TotalWithSchedulesDto;
 import com.anthill.OFStatisticsAPI.beans.dto.TotalStatisticDto;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,7 @@ import java.util.List;
 @Service
 public class CalculateStatisticService {
 
-    public OnlyFansModelDailyStatisticDto getDaily(List<ScheduleStatistic> statistics){
+    public TotalWithSchedulesDto getDaily(List<ScheduleStatistic> statistics){
         var totalProfit = statistics.stream()
                 .map(ScheduleStatistic::getProfit)
                 .reduce(BigDecimal::add)
@@ -37,7 +35,7 @@ public class CalculateStatisticService {
                 .traffic(trafficTotal)
                 .build();
 
-        return OnlyFansModelDailyStatisticDto.builder()
+        return TotalWithSchedulesDto.builder()
                 .total(total)
                 .statistics(statistics)
                 .build();

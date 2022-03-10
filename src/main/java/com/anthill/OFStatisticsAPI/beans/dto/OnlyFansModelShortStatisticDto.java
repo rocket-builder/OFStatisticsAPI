@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class OnlyFansModelShortStatisticDto {
 
     private OnlyFansModel model;
-    private BigDecimal profit;
 
+    private BigDecimal profit;
     private long userTotal, guestTotal, subCount;
 }
